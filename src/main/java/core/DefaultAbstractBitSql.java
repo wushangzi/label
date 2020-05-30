@@ -17,8 +17,9 @@ public class DefaultAbstractBitSql implements BitFactory, DBFactory {
 
     @Override
     public void initDB() {
-        if (connectionInfo != null) {
+        if (connectionInfo != null && connection==null) {
             //TODO initDb
+
         }
     }
 
