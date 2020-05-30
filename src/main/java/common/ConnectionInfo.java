@@ -10,6 +10,12 @@ public class ConnectionInfo {
 
     private String password;
 
+    private String host;
+
+    private String port;
+
+    private String defaultDB;
+
     private String connectionUrl;
 
     private Integer connectionCount;
@@ -44,5 +50,29 @@ public class ConnectionInfo {
 
     public void setConnectionCount(Integer connectionCount) {
         this.connectionCount = connectionCount;
+    }
+
+    public String getHost() {
+        return host;
+    }
+
+    public void setHost(String host) {
+        this.host = host;
+    }
+
+    public String getPort() {
+        return port;
+    }
+
+    public void setPort(String port) {
+        this.port = port;
+    }
+
+    public String getDefaultDB() {
+        return defaultDB;
+    }
+
+    public void setDefaultDB(String defaultDB) {
+        this.defaultDB = defaultDB;
     }
 }
