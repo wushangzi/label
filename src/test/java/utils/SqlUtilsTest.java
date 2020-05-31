@@ -1,24 +1,12 @@
 package utils;
 
-import common.ConnectionInfo;
+import base.BaseTestClass;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.List;
 
-class SqlUtilsTest {
-
-    private ConnectionInfo buildConnectionInfo()
-    {
-        ConnectionInfo connectionInfo = new ConnectionInfo ();
-        connectionInfo.setUser ("root");
-        connectionInfo.setPassword ("Cheng5453526");
-        connectionInfo.setHost ("localhost");
-        connectionInfo.setPort ("3309");
-        connectionInfo.setDefaultDB ("mysql");
-        return connectionInfo;
-    }
+class SqlUtilsTest extends BaseTestClass {
 
 
     @org.junit.jupiter.api.Test

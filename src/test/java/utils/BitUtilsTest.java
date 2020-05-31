@@ -1,10 +1,11 @@
 package utils;
 
+import base.BaseTestClass;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class BitUtilsTest {
+class BitUtilsTest extends BaseTestClass {
 
     @Test
     void getFieldIndex() {
