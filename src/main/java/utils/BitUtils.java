@@ -40,7 +40,7 @@ public class BitUtils {
 
 
     static void getCondition(StringBuilder stringBuilder, Integer fieldIndex, List<Integer> bitIndex, boolean isAll) {
-        stringBuilder.append (GlobalPara.DB_PREFIX + fieldIndex);
+        stringBuilder.append (GlobalPara.FIELD_PREFIX + fieldIndex);
         stringBuilder.append (" & ");
         long status = 0;
         for (Integer bit : bitIndex) {
@@ -64,6 +64,13 @@ public class BitUtils {
         return bitId % 64;
     }
 
+    /**
+     * this is a method get a section of sql.if isAll is true.then that is means all
+     * bits should exists
+     * @param bits label
+     * @param isAll
+     * @return
+     */
     public static String getAndAllOrOne(int[] bits, boolean isAll) {
         Map<Integer, List<Integer>> map = groupByBits (bits);
 
@@ -75,15 +82,24 @@ public class BitUtils {
         return condition.toString ();
     }
 
+
+    /**
+     * this is a method to set a bit is valid. e.g. the input parameter is
+     * 163.than the field suffix is 163/64.and bit index in the field is
+     * 163%64.this method just set invalid one bit every time
+     * @param bit
+     * @return if the method is success.a section of sql will be return.like that
+     * filename_5 = filename_5 & 0x11111110111.
+     */
     public static String setBitInvalid(int bit) {
         int fieldIndex = getFieldIndex (bit);
         int fieldBitIndex = getFieldBitIndex (bit);
         List<Integer> list = new ArrayList<> ();
         list.add (fieldBitIndex);
         StringBuilder stringBuilder = new StringBuilder (100);
-        stringBuilder.append (GlobalPara.DB_PREFIX + fieldIndex);
+        stringBuilder.append (GlobalPara.FIELD_PREFIX + fieldIndex);
         stringBuilder.append (" = ");
-        stringBuilder.append (GlobalPara.DB_PREFIX + fieldIndex);
+        stringBuilder.append (GlobalPara.FIELD_PREFIX + fieldIndex);
         stringBuilder.append (" & ");
         long status = ~(1 << fieldBitIndex);
         stringBuilder.append (status);

@@ -14,5 +14,4 @@ public class BitSqlImpl<T> extends DefaultAbstractBitSql implements BitSql<T> {
     public T getAllExistFromBits(int[] id) {
         return null;
     }
-
 }

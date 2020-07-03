@@ -24,7 +24,7 @@ public class DefaultAbstractBitSql implements BitFactory, DBFactory {
         if (connectionInfo != null && connection == null) {
             //TODO initDb
             connection = SqlUtils.getConnection (connectionInfo);
-            checkInitTable(connection);
+            checkInitTable (connection);
         }
     }
 
@@ -43,7 +43,21 @@ public class DefaultAbstractBitSql implements BitFactory, DBFactory {
         this.connectionInfo = connectionInfo;
     }
 
+    @Override
+    public void setDefaultTableFieldSize(int number) {
+        GlobalPara.setDefaultFieldNumber (number);
+    }
 
+    @Override
+    public int getDefaultTableFieldSize() {
+        return GlobalPara.getDefaultFieldNumber ();
+    }
+
+    /**
+     * check and init tables
+     *
+     * @param connection
+     */
     private void checkInitTable(Connection connection) {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement (getInitSql ());
@@ -53,6 +67,12 @@ public class DefaultAbstractBitSql implements BitFactory, DBFactory {
         }
     }
 
+
+    /**
+     * build global init sql string to constructor init label
+     *
+     * @return
+     */
     private String getInitSql() {
         return String.format (GlobalPara.INIT_FORMAT_LABEL_STRING,
                 connectionInfo.getDefaultDB ());

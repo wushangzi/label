@@ -1,12 +1,17 @@
 package common;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @author chengyongjun
  * @date 5/30/20 6:33 AM
  */
 public class GlobalPara {
 
-    public static final String DB_PREFIX = "bit_info_";
+    public static final Object GLOBAL_PARA_LOCK = new Object ();
+
+    public static final String FIELD_PREFIX = "bit_info_";
 
     public static final String INIT_LABEL_NAME = "label_info";
 
@@ -19,4 +24,24 @@ public class GlobalPara {
     public static final int LABEL_STATUS_NORMAL = 1;
 
     public static final int LABEL_STATUS_DELETED = 1 << 1;
+
+    static int DEFAULT_FIELD_NUMBER = 8;
+
+    static final Map<String, Integer> SPECIAL_TABLE_FIELD_NUMBER = new HashMap<> ();
+
+    public static int getDefaultFieldNumber() {
+        synchronized (GLOBAL_PARA_LOCK) {
+            return DEFAULT_FIELD_NUMBER;
+        }
+    }
+
+    public static void setDefaultFieldNumber(int defaultFieldNumber) {
+        synchronized (GLOBAL_PARA_LOCK) {
+            DEFAULT_FIELD_NUMBER = defaultFieldNumber;
+        }
+    }
+
+    public static Map<String, Integer> getSpecialTableFieldNumber() {
+        return SPECIAL_TABLE_FIELD_NUMBER;
+    }
 }
