@@ -2,6 +2,9 @@ package common;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author chengyongjun
@@ -47,5 +50,16 @@ public class GlobalPara {
 
     public static Map<String, Integer> getSpecialTableFieldNumber() {
         return SPECIAL_TABLE_FIELD_NUMBER;
+    }
+
+    public static ExecutorService executorService = null;
+
+    {
+        int cpuNumber = Runtime.getRuntime ().availableProcessors ();
+
+        if (cpuNumber > 4) {
+            cpuNumber /= 4;
+        }
+        //executorService = new ThreadPoolExecutor (cpuNumber, cpuNumber * 2, 0, TimeUnit.DAYS);
     }
 }

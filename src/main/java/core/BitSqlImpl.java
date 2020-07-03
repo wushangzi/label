@@ -47,7 +47,6 @@ public class BitSqlImpl<T> extends DefaultAbstractBitSql implements BitSql<T> {
                 } else if (resultSet.getInt (0) - result != 1) {
                     Integer fieldNumber = GlobalPara.SPECIAL_TABLE_FIELD_NUMBER.get (schemaName + "$" + tableName);
                     if (result + 1 <= (1 << fieldNumber)) {
-                        //TODO insert and
                         String insertSql = String.format ("insert into %s.%s(schema_name,table_name,name,bit_index) values(?,?,?,?)");
                         PreparedStatement insert = connection.prepareStatement (insertSql);
                         preparedStatement.setString (1, schemaName);
@@ -57,8 +56,6 @@ public class BitSqlImpl<T> extends DefaultAbstractBitSql implements BitSql<T> {
                         insert.execute ();
 
                     } else {
-                        //return false
-                        //connection.prepareStatement ("insert into %s.%s()")
                         resultInfo.setCode (0);
                         resultInfo.setMsg ("标签超出范围");
                     }
