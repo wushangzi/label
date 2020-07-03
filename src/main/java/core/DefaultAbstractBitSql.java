@@ -6,8 +6,8 @@ import common.GlobalPara;
 import utils.SqlUtils;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 /**
  * @author chengyongjun
@@ -20,9 +20,8 @@ public class DefaultAbstractBitSql implements BitFactory, DBFactory {
     private Connection connection;
 
     @Override
-    public void initDB() throws SQLException, ClassNotFoundException {
+    public void initDefaultDB() throws SQLException, ClassNotFoundException {
         if (connectionInfo != null && connection == null) {
-            //TODO initDb
             connection = SqlUtils.getConnection (connectionInfo);
             checkInitTable (connection);
         }
@@ -60,13 +59,13 @@ public class DefaultAbstractBitSql implements BitFactory, DBFactory {
      */
     private void checkInitTable(Connection connection) {
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement (getInitSql ());
-            preparedStatement.executeUpdate ();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace ();
+            Statement statement = connection.createStatement ();
+            statement.execute (GlobalPara.INIT_FORMAT_GLOBAL_SCHEMA_SQL);
+            statement.execute (getInitSql ());
+        } catch (SQLException e) {
+            e.printStackTrace ();
         }
     }
-
 
     /**
      * build global init sql string to constructor init label
@@ -75,6 +74,11 @@ public class DefaultAbstractBitSql implements BitFactory, DBFactory {
      */
     private String getInitSql() {
         return String.format (GlobalPara.INIT_FORMAT_LABEL_STRING,
-                connectionInfo.getDefaultDB ());
+                GlobalPara.INIT_GLOBAL_SCHEMA);
+    }
+
+
+    protected void addSomeLabel(String schemaName, String tableName, String labelName) {
+
     }
 }

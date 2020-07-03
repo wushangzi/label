@@ -7,7 +7,7 @@ import java.sql.SQLException;
  * @date 5/29/20 6:52 AM
  */
 public interface BitFactory {
-    void initDB() throws SQLException, ClassNotFoundException;
+    void initDefaultDB() throws SQLException, ClassNotFoundException;
 
     int[] getBitInfoFromIds();
 }
