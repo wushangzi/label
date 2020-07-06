@@ -20,7 +20,7 @@ public interface BitSql<T> extends BitFactory {
      * @param labelId
      * @return
      */
-    boolean deleteLabel(int labelId);
+    boolean deleteLabel(int labelId, Connection connection);
 
     ResultInfo addLabel(String schemaName, String tableName, String name, Connection connection);
 

@@ -2,9 +2,7 @@ package common;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 
 /**
  * @author chengyongjun
@@ -53,6 +51,7 @@ public class GlobalPara {
     }
 
     public static ExecutorService executorService = null;
+    BlockingQueue<Runnable> runnables = new LinkedBlockingDeque<Runnable> ();
 
     {
         int cpuNumber = Runtime.getRuntime ().availableProcessors ();
@@ -60,6 +59,11 @@ public class GlobalPara {
         if (cpuNumber > 4) {
             cpuNumber /= 4;
         }
-        //executorService = new ThreadPoolExecutor (cpuNumber, cpuNumber * 2, 0, TimeUnit.DAYS);
+        executorService = new ThreadPoolExecutor (cpuNumber, cpuNumber * 2,
+                0, TimeUnit.DAYS, runnables, r -> {
+            Thread thread = new Thread (r);
+            thread.setDaemon (true);
+            return thread;
+        });
     }
 }

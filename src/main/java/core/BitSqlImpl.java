@@ -3,6 +3,7 @@ package core;
 
 import common.GlobalPara;
 import common.ResultInfo;
+import common.UserTable;
 import exception.AddLabelOutOFIndexException;
 
 import javax.xml.transform.Result;
@@ -23,7 +24,22 @@ public class BitSqlImpl<T> extends DefaultAbstractBitSql implements BitSql<T> {
     }
 
     @Override
-    public boolean deleteLabel(int labelId) {
+    public boolean deleteLabel(int labelId, Connection connection) {
+        try {
+            connection.createStatement ().execute ("begin;");
+            String deleteLabelSql = "";
+
+            String searchSql="select * from "+GlobalPara.INIT_GLOBAL_SCHEMA+"."+GlobalPara.INIT_LABEL_NAME;
+            PreparedStatement preparedStatement = connection.prepareStatement (deleteLabelSql);
+
+            preparedStatement.execute ();
+
+
+        } catch (Exception e) {
+
+        }
+
+
         return false;
     }
 
@@ -78,5 +94,16 @@ public class BitSqlImpl<T> extends DefaultAbstractBitSql implements BitSql<T> {
     @Override
     public String recallLabel(int labelId) {
         return null;
+    }
+
+
+    private UserTable getUserTable(ResultSet resultSet) throws SQLException {
+        UserTable userTable = new UserTable ();
+        while (resultSet.next ()) {
+            userTable.setSchema (resultSet.getString (0));
+            userTable.setTableName (resultSet.getString (1));
+            break;
+        }
+        return userTable;
     }
 }

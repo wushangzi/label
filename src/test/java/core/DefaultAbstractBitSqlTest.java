@@ -15,7 +15,7 @@ class DefaultAbstractBitSqlTest extends BaseTestClass {
     void initDB() {
         try {
             defaultAbstractBitSql.addDB (buildConnectionInfo ());
-            defaultAbstractBitSql.initDB ();
+            defaultAbstractBitSql.initDefaultDB ();
         } catch (SQLException throwables) {
             throwables.printStackTrace ();
         } catch (ClassNotFoundException e) {
